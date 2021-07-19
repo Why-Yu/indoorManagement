@@ -1,11 +1,16 @@
 <template>
   <div>
-    123
+    {{ coordinates }}
   </div>
 </template>
 
 <script>
 export default {
+  computed: {
+    coordinates() {
+      return this.$store.state.cesium.coordinates
+    }
+  }
 }
 </script>
 

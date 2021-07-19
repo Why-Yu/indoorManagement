@@ -14,7 +14,7 @@
     >
       <el-table-column align="center" label="ID" min-width="50">
         <template slot-scope="scope">
-          {{ scope.$index }}
+          {{ scope.row.index }}
         </template>
       </el-table-column>
       <el-table-column align="center" label="名称" min-width="150">
@@ -51,6 +51,7 @@
         </template>
       </el-table-column>
     </el-table>
+    <form-3d-tiles :dialog-form-visible.sync="dialogFormVisible" :form-data="formData" :local-form-data="localFormData" />
     <el-pagination
       background
       layout="total, sizes, prev, pager, next, jumper"
@@ -65,16 +66,28 @@
 </template>
 
 <script>
-import { get3dTiles, create3dTiles, delete3dTiles, update3dTiles } from '@/api/api-table-3dTiles'
+import { get3dTiles, create3dTiles, delete3dTiles } from '@/api/api-table-3dTiles'
+import Form3dTiles from '@/views/form/components/form-3d-tiles'
 
 export default {
+  components: { Form3dTiles },
   data() {
     return {
       list: null,
       listLoading: true,
       total: null,
       size: 9,
-      currentPage: 1
+      currentPage: 1,
+      dialogFormVisible: false,
+      formData: {
+      },
+      localFormData: {
+        index: 0,
+        name: '',
+        path: '',
+        longitude: 0,
+        latitude: 0
+      }
     }
   },
   created() {
@@ -90,13 +103,35 @@ export default {
       })
     },
     handleFind(row) {
-
+      this.$router.push({ path: '/cesium/index' })
+      this.$store.commit('cesium/SET_COORDINATES', { latitude: row.latitude, longitude: row.longitude })
     },
     handleEdit(row) {
-
+      this.dialogFormVisible = true
+      // 因为父子组件传递的是引用，如果打开编辑菜单并编辑了数据但是之后又取消的话，子组件的修改会导致这里的数据发生变化，出现不想要的同步修改问题
+      // 所以传递一个浅拷贝又传递一个深拷贝，子组件只对深拷贝进行修改，只有编辑确认才对浅拷贝进行同步
+      // 这样即避免了同步修改问题，又可以避免只传递了深拷贝则不得不需要重新再向后台请求一次更新后的数据
+      this.formData = row
+      Object.assign(this.localFormData, row)
     },
     handleDelete(row) {
-
+      this.$confirm('此操作将永久删除该记录, 是否继续?', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(() => {
+        delete3dTiles(row.index).then(() => {
+          this.$message({
+            type: 'success',
+            message: '删除成功!'
+          })
+        })
+      }).catch(() => {
+        this.$message({
+          type: 'info',
+          message: '已取消删除'
+        })
+      })
     },
     handleCurrentChange(page) {
       get3dTiles({ page: page - 1, size: this.size }).then(response => {

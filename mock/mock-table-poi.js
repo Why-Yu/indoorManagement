@@ -2,6 +2,7 @@ const Mock = require('mockjs')
 
 const data = Mock.mock({
   'items|100': [{
+    'index|+1': 0,
     province: '',
     city: '',
     area: '@county(true)',

@@ -14,7 +14,7 @@
     >
       <el-table-column align="center" label="ID" min-width="50">
         <template slot-scope="scope">
-          {{ scope.$index }}
+          {{ scope.row.index }}
         </template>
       </el-table-column>
       <el-table-column align="center" label="省份" min-width="140">
@@ -66,6 +66,7 @@
         </template>
       </el-table-column>
     </el-table>
+    <form-poi :dialog-form-visible.sync="dialogFormVisible" :form-data="poi" />
     <el-pagination
       background
       layout="total, sizes, prev, pager, next, jumper"
@@ -80,16 +81,29 @@
 </template>
 
 <script>
-import { getPoi, createPoi, deletePoi, updatePoi } from '@/api/api-table-poi'
+import { getPoi, createPoi, deletePoi } from '@/api/api-table-poi'
+import FormPoi from '@/views/form/components/form-poi'
 
 export default {
+  components: { FormPoi },
   data() {
     return {
       list: null,
       listLoading: true,
       total: null,
       size: 9,
-      currentPage: 1
+      currentPage: 1,
+      dialogFormVisible: false,
+      poi: {
+        index: '0',
+        province: '0',
+        city: '0',
+        area: '0',
+        type: '0',
+        name: '0',
+        longitude: 0,
+        latitude: 0
+      }
     }
   },
   created() {
@@ -105,13 +119,31 @@ export default {
       })
     },
     handleFind(row) {
-
+      this.$router.push({ path: '/cesium/index' })
+      this.$store.commit('cesium/SET_COORDINATES', { latitude: row.latitude, longitude: row.longitude })
     },
     handleEdit(row) {
-
+      this.dialogFormVisible = true
+      this.poi = row
     },
     handleDelete(row) {
-
+      this.$confirm('此操作将永久删除该记录, 是否继续?', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(() => {
+        deletePoi(row.index).then(() => {
+          this.$message({
+            type: 'success',
+            message: '删除成功!'
+          })
+        })
+      }).catch(() => {
+        this.$message({
+          type: 'info',
+          message: '已取消删除'
+        })
+      })
     },
     handleCurrentChange(page) {
       getPoi({ page: page - 1, size: this.size }).then(response => {

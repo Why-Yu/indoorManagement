@@ -2,6 +2,7 @@ const Mock = require('mockjs')
 
 const data = Mock.mock({
   'items|25': [{
+    'index|+1': 0,
     name: '@cword(7)',
     path: '@url',
     longitude: '@float(100, 140)',
@@ -21,6 +22,18 @@ module.exports = [
         data: {
           total: items.length,
           items: items.slice(page * size, (page + 1) * size)
+        }
+      }
+    }
+  },
+  {
+    url: '/indoor-management/table/3dTiles/update',
+    type: 'post',
+    response: config => {
+      return {
+        code: 20000,
+        data: {
+          total: 1
         }
       }
     }
