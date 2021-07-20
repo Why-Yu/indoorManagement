@@ -62,7 +62,7 @@ export default {
       Object.assign(this.formData, this.localFormData)
       update3dTiles(this.formData).then(response => {
         this.$message({
-          message: '上传成功',
+          message: '编辑成功',
           type: 'success'
         })
       })

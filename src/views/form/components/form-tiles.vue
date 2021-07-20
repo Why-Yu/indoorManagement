@@ -1,13 +1,77 @@
 <template>
-
+  <el-dialog title="编辑菜单" :visible="dialogFormVisible">
+    <el-form :model="localFormData">
+      <el-form-item label="ID" :label-width="formLabelWidth">
+        <el-input v-model="localFormData.index" :disabled="true" />
+      </el-form-item>
+      <el-form-item label="数据标识" :label-width="formLabelWidth">
+        <el-input v-model="localFormData.name" />
+      </el-form-item>
+      <el-form-item label="缩放层级" :label-width="formLabelWidth">
+        <el-input v-model="localFormData.zoom" />
+      </el-form-item>
+      <el-form-item label="行编号" :label-width="formLabelWidth">
+        <el-input v-model="localFormData.x" />
+      </el-form-item>
+      <el-form-item label="列编号" :label-width="formLabelWidth">
+        <el-input v-model="localFormData.y" />
+      </el-form-item>
+    </el-form>
+    <div slot="footer" class="dialog-footer">
+      <el-button @click="clickNo">取 消</el-button>
+      <el-button type="primary" @click="clickYes">上传编辑后内容</el-button>
+    </div>
+  </el-dialog>
 </template>
 
 <script>
+import { updateTiles } from '@/api/api-table-tiles'
+
 export default {
-  name: "form-tiles"
+  props: {
+    formData: {
+      type: Object,
+      default: function() {
+        return {
+        }
+      }
+    },
+    localFormData: {
+      type: Object,
+      default: function() {
+        return {
+        }
+      }
+    },
+    dialogFormVisible: {
+      type: Boolean,
+      default: false
+    }
+  },
+  data() {
+    return {
+      formLabelWidth: '120px'
+    }
+  },
+  methods: {
+    clickNo() {
+      this.$emit('update:dialogFormVisible', false)
+    },
+    clickYes() {
+      this.$emit('update:dialogFormVisible', false)
+      Object.assign(this.formData, this.localFormData)
+      updateTiles(this.formData).then(response => {
+        this.$message({
+          message: '编辑成功',
+          type: 'success'
+        })
+      })
+    }
+  }
 }
 </script>
 
 <style scoped>
 
 </style>
+

@@ -1,29 +1,29 @@
 <template>
   <el-dialog title="编辑菜单" :visible="dialogFormVisible">
-    <el-form :model="formData">
+    <el-form :model="localFormData">
       <el-form-item label="ID" :label-width="formLabelWidth">
-        <el-input v-model="formData.index" :disabled="true" />
+        <el-input v-model="localFormData.index" :disabled="true" />
       </el-form-item>
       <el-form-item label="省份" :label-width="formLabelWidth">
-        <el-input v-model="formData.province" />
+        <el-input v-model="localFormData.province" />
       </el-form-item>
       <el-form-item label="城市" :label-width="formLabelWidth">
-        <el-input v-model="formData.city" />
+        <el-input v-model="localFormData.city" />
       </el-form-item>
       <el-form-item label="区域" :label-width="formLabelWidth">
-        <el-input v-model="formData.area" />
+        <el-input v-model="localFormData.area" />
       </el-form-item>
       <el-form-item label="类别" :label-width="formLabelWidth">
-        <el-input v-model="formData.type" />
+        <el-input v-model="localFormData.type" />
       </el-form-item>
       <el-form-item label="名称" :label-width="formLabelWidth">
-        <el-input v-model="formData.name" />
+        <el-input v-model="localFormData.name" />
       </el-form-item>
       <el-form-item label="经度" :label-width="formLabelWidth">
-        <el-input v-model="formData.longitude" />
+        <el-input v-model="localFormData.longitude" />
       </el-form-item>
       <el-form-item label="纬度" :label-width="formLabelWidth">
-        <el-input v-model="formData.latitude" />
+        <el-input v-model="localFormData.latitude" />
       </el-form-item>
     </el-form>
     <div slot="footer" class="dialog-footer">
@@ -39,6 +39,13 @@ import { updatePoi } from '@/api/api-table-poi'
 export default {
   props: {
     formData: {
+      type: Object,
+      default: function() {
+        return {
+        }
+      }
+    },
+    localFormData: {
       type: Object,
       default: function() {
         return {
@@ -61,9 +68,10 @@ export default {
     },
     clickYes() {
       this.$emit('update:dialogFormVisible', false)
+      Object.assign(this.formData, this.localFormData)
       updatePoi(this.formData).then(response => {
         this.$message({
-          message: '上传成功',
+          message: '编辑成功',
           type: 'success'
         })
       })

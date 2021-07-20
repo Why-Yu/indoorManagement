@@ -120,7 +120,8 @@ export default {
         cancelButtonText: '取消',
         type: 'warning'
       }).then(() => {
-        delete3dTiles(row.index).then(() => {
+        delete3dTiles({ index: row.index }).then(() => {
+          this.fetchData()
           this.$message({
             type: 'success',
             message: '删除成功!'

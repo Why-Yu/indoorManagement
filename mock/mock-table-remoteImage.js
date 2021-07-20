@@ -2,6 +2,7 @@ const Mock = require('mockjs')
 
 const data = Mock.mock({
   'items|100': [{
+    'index|+1': 0,
     name: 'LC814506520@integer(20000, 22000)LGN00',
     band: '@integer(0, 232)',
     rowIndex: '@integer(0, 70)',
@@ -25,6 +26,18 @@ module.exports = [
         data: {
           total: items.length,
           items: items.slice(page * size, (page + 1) * size)
+        }
+      }
+    }
+  },
+  {
+    url: '/indoor-management/table/RemoteImage/update',
+    type: 'post',
+    response: config => {
+      return {
+        code: 20000,
+        data: {
+          total: 1
         }
       }
     }

@@ -66,7 +66,7 @@
         </template>
       </el-table-column>
     </el-table>
-    <form-poi :dialog-form-visible.sync="dialogFormVisible" :form-data="poi" />
+    <form-poi :dialog-form-visible.sync="dialogFormVisible" :form-data="formData" :local-form-data="localFormData" />
     <el-pagination
       background
       layout="total, sizes, prev, pager, next, jumper"
@@ -94,7 +94,8 @@ export default {
       size: 9,
       currentPage: 1,
       dialogFormVisible: false,
-      poi: {
+      formData: {},
+      localFormData: {
         index: '0',
         province: '0',
         city: '0',
@@ -124,7 +125,8 @@ export default {
     },
     handleEdit(row) {
       this.dialogFormVisible = true
-      this.poi = row
+      this.formData = row
+      Object.assign(this.localFormData, row)
     },
     handleDelete(row) {
       this.$confirm('此操作将永久删除该记录, 是否继续?', '提示', {
@@ -132,7 +134,8 @@ export default {
         cancelButtonText: '取消',
         type: 'warning'
       }).then(() => {
-        deletePoi(row.index).then(() => {
+        deletePoi({ index: row.index }).then(() => {
+          this.fetchData()
           this.$message({
             type: 'success',
             message: '删除成功!'

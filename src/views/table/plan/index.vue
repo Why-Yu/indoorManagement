@@ -14,7 +14,7 @@
     >
       <el-table-column align="center" label="ID" min-width="50">
         <template slot-scope="scope">
-          {{ scope.$index }}
+          {{ scope.row.index }}
         </template>
       </el-table-column>
       <el-table-column align="center" label="名称" min-width="150">
@@ -49,6 +49,7 @@
         </template>
       </el-table-column>
     </el-table>
+    <form-plan :dialog-form-visible.sync="dialogFormVisible" :form-data="formData" :local-form-data="localFormData" />
     <el-pagination
       background
       layout="total, sizes, prev, pager, next, jumper"
@@ -63,9 +64,11 @@
 </template>
 
 <script>
-import { getPlan, createPlan, deletePlan, updatePlan } from '@/api/api-table-plan'
+import { getPlan, createPlan, deletePlan } from '@/api/api-table-plan'
+import FormPlan from '@/views/form/components/form-plan'
 
 export default {
+  components: { FormPlan },
   data() {
     return {
       list: null,
@@ -73,7 +76,15 @@ export default {
       total: null,
       size: 7,
       currentPage: 1,
-      fit: 'fill'
+      fit: 'fill',
+      dialogFormVisible: false,
+      formData: {
+      },
+      localFormData: {
+        index: 0,
+        name: '',
+        path: ''
+      }
     }
   },
   created() {
@@ -89,13 +100,33 @@ export default {
       })
     },
     handleFind(row) {
-
+      this.$router.push({ path: '/cesium/index' })
+      this.$store.commit('cesium/SET_COORDINATES', { latitude: row.latitude, longitude: row.longitude })
     },
     handleEdit(row) {
-
+      this.dialogFormVisible = true
+      this.formData = row
+      Object.assign(this.localFormData, row)
     },
     handleDelete(row) {
-
+      this.$confirm('此操作将永久删除该记录, 是否继续?', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(() => {
+        deletePlan({ index: row.index }).then(() => {
+          this.fetchData()
+          this.$message({
+            type: 'success',
+            message: '删除成功!'
+          })
+        })
+      }).catch(() => {
+        this.$message({
+          type: 'info',
+          message: '已取消删除'
+        })
+      })
     },
     handleCurrentChange(page) {
       getPlan({ page: page - 1, size: this.size }).then(response => {

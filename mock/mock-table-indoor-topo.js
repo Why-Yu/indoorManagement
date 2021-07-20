@@ -2,6 +2,7 @@ const Mock = require('mockjs')
 
 const data = Mock.mock({
   'items|100': [{
+    'index|+1': 0,
     buildId: '@integer(1, 10)',
     beginId: '@integer(1, 999)',
     beginX: '@float(12718210, 12718273)',
@@ -33,6 +34,18 @@ module.exports = [
         data: {
           total: items.length,
           items: items.slice(page * size, (page + 1) * size)
+        }
+      }
+    }
+  },
+  {
+    url: '/indoor-management/table/IndoorTopo/update',
+    type: 'post',
+    response: config => {
+      return {
+        code: 20000,
+        data: {
+          total: 1
         }
       }
     }

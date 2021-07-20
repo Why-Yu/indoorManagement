@@ -39,5 +39,17 @@ module.exports = [
         }
       }
     }
+  },
+  {
+    url: '/indoor-management/table/Poi/update',
+    type: 'post',
+    response: config => {
+      return {
+        code: 20000,
+        data: {
+          total: 1
+        }
+      }
+    }
   }
 ]

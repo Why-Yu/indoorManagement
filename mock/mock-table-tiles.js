@@ -2,6 +2,7 @@ const Mock = require('mockjs')
 
 const data = Mock.mock({
   'items|100': [{
+    'index|+1': 0,
     'name|1': ['全球矢量底图瓦片', '全球矢量注记瓦片', '全球影像底图瓦片', '全球影像注记瓦片'],
     zoom: '@integer(1, 18)',
     x: '',
@@ -30,6 +31,18 @@ module.exports = [
         data: {
           total: items.length,
           items: items.slice(page * size, (page + 1) * size)
+        }
+      }
+    }
+  },
+  {
+    url: '/indoor-management/table/Tiles/update',
+    type: 'post',
+    response: config => {
+      return {
+        code: 20000,
+        data: {
+          total: 1
         }
       }
     }

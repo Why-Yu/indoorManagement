@@ -14,7 +14,7 @@
     >
       <el-table-column align="center" label="ID" min-width="40">
         <template slot-scope="scope">
-          {{ scope.$index }}
+          {{ scope.row.index }}
         </template>
       </el-table-column>
       <el-table-column align="center" label="楼栋标号" min-width="70">
@@ -49,7 +49,7 @@
       </el-table-column>
       <el-table-column align="center" label="终止点Y" min-width="160">
         <template slot-scope="scope">
-          {{ scope.row.endX }}
+          {{ scope.row.endY }}
         </template>
       </el-table-column>
       <el-table-column align="center" label="所属楼层" min-width="50">
@@ -71,6 +71,7 @@
         </template>
       </el-table-column>
     </el-table>
+    <form-indoor-topo :dialog-form-visible.sync="dialogFormVisible" :form-data="formData" :local-form-data="localFormData" />
     <el-pagination
       background
       layout="total, sizes, prev, pager, next, jumper"
@@ -85,16 +86,32 @@
 </template>
 
 <script>
-import { getIndoorTopo, createIndoorTopo, deleteIndoorTopo, updateIndoorTopo } from '@/api/api-table-indoor-topo'
+import { getIndoorTopo, createIndoorTopo, deleteIndoorTopo } from '@/api/api-table-indoor-topo'
+import FormIndoorTopo from '@/views/form/components/form-indoor-topo'
 
 export default {
+  components: { FormIndoorTopo },
   data() {
     return {
       list: null,
       listLoading: true,
       total: null,
       size: 10,
-      currentPage: 1
+      currentPage: 1,
+      dialogFormVisible: false,
+      formData: {
+      },
+      localFormData: {
+        index: 0,
+        buildId: '',
+        beginId: '',
+        beginX: 0,
+        beginY: 0,
+        endId: '',
+        endX: 0,
+        endY: 0,
+        floor: ''
+      }
     }
   },
   created() {
@@ -110,13 +127,33 @@ export default {
       })
     },
     handleFind(row) {
-
+      this.$router.push({ path: '/cesium/index' })
+      this.$store.commit('cesium/SET_COORDINATES', { latitude: row.latitude, longitude: row.longitude })
     },
     handleEdit(row) {
-
+      this.dialogFormVisible = true
+      this.formData = row
+      Object.assign(this.localFormData, row)
     },
     handleDelete(row) {
-
+      this.$confirm('此操作将永久删除该记录, 是否继续?', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(() => {
+        deleteIndoorTopo({ index: row.index }).then(() => {
+          this.fetchData()
+          this.$message({
+            type: 'success',
+            message: '删除成功!'
+          })
+        })
+      }).catch(() => {
+        this.$message({
+          type: 'info',
+          message: '已取消删除'
+        })
+      })
     },
     handleCurrentChange(page) {
       getIndoorTopo({ page: page - 1, size: this.size }).then(response => {
