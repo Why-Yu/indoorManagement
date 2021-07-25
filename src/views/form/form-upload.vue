@@ -2,7 +2,7 @@
   <div id="container">
     <el-card id="myCard">
       <el-form label-width="150px">
-        <el-form-item label="Building Name">
+        <el-form-item label="建筑名称">
           <el-select
             v-model="buildName"
             placeholder="请选择类型"
@@ -16,7 +16,7 @@
             />
           </el-select>
         </el-form-item>
-        <el-form-item label="Floor">
+        <el-form-item label="楼层">
           <el-select v-model="floor" placeholder="请选择类型">
             <el-option
               v-for="item in floors"
@@ -26,7 +26,7 @@
             />
           </el-select>
         </el-form-item>
-        <el-form-item label="Type">
+        <el-form-item label="类型">
           <el-select v-model="typeValue" placeholder="请选择类型">
             <el-option
               v-for="item in types"
@@ -36,11 +36,11 @@
             />
           </el-select>
         </el-form-item>
-        <el-form-item label="Encryption">
+        <el-form-item label="是否加密">
           <el-radio v-model="encrypt" label="true">是</el-radio>
           <el-radio v-model="encrypt" label="false">否</el-radio>
         </el-form-item>
-        <el-form-item label="File">
+        <el-form-item label="文件">
           <el-upload
             ref="upload"
             class="upload-demo"
@@ -69,15 +69,15 @@
         width="180"
         align="center"
       />
-      <el-table-column prop="floor" label="Floor" width="180" align="center" />
-      <el-table-column prop="type" label="Type" width="180" align="center" />
+      <el-table-column prop="floor" label="楼层" width="180" align="center" />
+      <el-table-column prop="type" label="类型" width="180" align="center" />
       <el-table-column
         prop="encryption"
-        label="Encryption"
+        label="是否加密"
         width="180"
         align="center"
       />
-      <el-table-column prop="fileName" label="File" align="center" />
+      <el-table-column prop="fileName" label="文件" align="center" />
       <!-- <el-table-column label="Operation" align="center"> </el-table-column> -->
     </el-table>
   </div>
@@ -85,7 +85,7 @@
 
 <script>
 export default {
-  data() {
+  data () {
     return {
       tableData: [],
       list: [],
@@ -130,7 +130,7 @@ export default {
   methods: {
     // get building list data
     getBid () {
-      this.$axios.get('/infos').then(response => {
+      this.$axios.get(this.$request_url + '/infos').then(response => {
         console.log('response', response)
         this.list = response.data
         var obj
@@ -232,11 +232,11 @@ export default {
     },
     async uploadFile () {
       const formData = new FormData()
-      // formData.append('file', this.file.raw)
       if (this.encrypt === 'true') {
-        var fileData = await this.encryptFile()
-        console.log('x2', fileData)
-        formData.append('file', this.fileData)
+        // var fileData = await this.encryptFile()
+        // console.log('x2', fileData)
+        // formData.append('file', fileData)
+        formData.append('file', this.file.raw)
       } else {
         formData.append('file', this.file.raw)
         console.log('unencrypt', this.formData)
@@ -244,7 +244,7 @@ export default {
       switch (this.typeValue) {
         case '1':
           this.$axios({
-            url: '/feature/wifi' + this.obj.buildName + '/' + this.obj.floor,
+            url: this.$request_url + '/feature/wifi' + this.obj.buildName + '/' + this.obj.floor,
             method: 'post',
             data: formData
           }).then((response) => {
@@ -267,7 +267,7 @@ export default {
           break
         case '2':
           this.$axios({
-            url: '/feature/ble' + this.obj.buildName,
+            url: this.$request_url + '/feature/ble' + this.obj.buildName,
             method: 'post',
             data: formData
           }).then((response) => {
@@ -290,7 +290,7 @@ export default {
           break
         case '3':
           this.$axios({
-            url: '/feature/mag/' + this.obj.buildName + '/' + this.obj.floor,
+            url: this.$request_url + '/feature/mag/' + this.obj.buildName + '/' + this.obj.floor,
             method: 'post',
             data: formData
           }).then((response) => {
@@ -313,7 +313,7 @@ export default {
           break
         case '4':
           this.$axios({
-            url: '/feature/pic/jy',
+            url: this.$request_url + '/feature/pic/' + this.obj.buildName,
             method: 'post',
             data: formData
           }).then((response) => {
@@ -344,7 +344,7 @@ export default {
 #container {
   width: 70%;
   margin: auto;
-  margin-top: 60px;
+  margin-top: 50px;
 }
 #myCard {
   padding: 25px 25%;
