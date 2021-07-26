@@ -30,7 +30,7 @@ module.exports = [
         })
       }
       return {
-        code: 20000,
+        code: 200,
         data: {
           total: items.length,
           items: items.slice(page * size, (page + 1) * size)
@@ -43,7 +43,7 @@ module.exports = [
     type: 'post',
     response: config => {
       return {
-        code: 20000,
+        code: 200,
         data: {
           total: 1
         }

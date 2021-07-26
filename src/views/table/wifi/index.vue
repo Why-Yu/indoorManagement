@@ -14,7 +14,7 @@
     >
       <el-table-column align="center" label="ID" min-width="50">
         <template slot-scope="scope">
-          {{ scope.$index }}
+          {{ scope.row.index }}
         </template>
       </el-table-column>
       <el-table-column align="center" label="名称" min-width="150">
@@ -98,8 +98,8 @@ export default {
     fetchData() {
       this.listLoading = true
       getWifi({ page: this.currentPage - 1, size: this.size }).then(response => {
-        this.list = response.data.items
-        this.total = response.data.total
+        this.list = response.data.content
+        this.total = response.data.totalElements
         this.listLoading = false
       })
     },
@@ -134,19 +134,19 @@ export default {
     },
     handleCurrentChange(page) {
       getWifi({ page: page - 1, size: this.size }).then(response => {
-        this.list = response.data.items
+        this.list = response.data.content
       })
     },
     handleSizeChange(size) {
       if (this.currentPage === 1) {
         getWifi({ page: 0, size: size }).then(response => {
-          this.list = response.data.items
+          this.list = response.data.content
         })
         return
       }
       if (this.currentPage * size <= this.total) {
         getWifi({ page: this.currentPage - 1, size: size }).then(response => {
-          this.list = response.data.items
+          this.list = response.data.content
         })
       }
     }

@@ -1,8 +1,9 @@
 import request from '@/utils/request'
+import GlobalUrl from '@/utils/GlobalUrl'
 
 export function getWifi(data) {
   return request({
-    url: '/indoor-management/table/Wifi/data',
+    url: GlobalUrl.prefixUrl + '/indoor-management/Wifi/table/data',
     method: 'post',
     data
   })
@@ -10,7 +11,7 @@ export function getWifi(data) {
 
 export function createWifi(data) {
   return request({
-    url: '/indoor-management/table/Wifi/create',
+    url: GlobalUrl.prefixUrl + '/indoor-management/Wifi/table/create',
     method: 'post',
     data
   })
@@ -18,7 +19,7 @@ export function createWifi(data) {
 
 export function deleteWifi(data) {
   return request({
-    url: '/indoor-management/table/Wifi/delete',
+    url: GlobalUrl.prefixUrl + '/indoor-management/Wifi/table/delete',
     method: 'post',
     data
   })
@@ -26,7 +27,7 @@ export function deleteWifi(data) {
 
 export function updateWifi(data) {
   return request({
-    url: '/indoor-management/table/Wifi/update',
+    url: GlobalUrl.prefixUrl + '/indoor-management/Wifi/table/update',
     method: 'post',
     data
   })
