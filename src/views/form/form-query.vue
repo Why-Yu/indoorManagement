@@ -30,7 +30,7 @@
 
 <script>
 export default {
-  data () {
+  data() {
     return {
       options: [],
       value: '',
@@ -38,11 +38,11 @@ export default {
       infos: null
     }
   },
-  created () {
+  created() {
     this.getInfo()
   },
   methods: {
-    getInfo () {
+    getInfo() {
       // this.$axios.get('/infos').then(response => {
       this.$axios.get(this.$request_url + '/infos').then(response => {
         console.log('res', response)
@@ -58,7 +58,7 @@ export default {
         }
       })
     },
-    query () {
+    query() {
       var features = this.infos[parseInt(this.value)].features
       var obj
       for (var i = 0; i < features.length; i++) {

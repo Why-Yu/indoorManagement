@@ -150,14 +150,14 @@ export const constantRoutes = [
         name: 'query',
         component: () => import('@/views/form/form-query'),
         meta: { title: 'query', icon: 'el-icon-search' }
+      },
+      {
+        path: 'file-upload',
+        name: 'file-upload',
+        component: () => import('@/views/form/form-file-upload'),
+        meta: { title: 'file-upload', icon: 'el-icon-folder' }
       }
     ]
-  },
-
-  {
-    path: '/form/upload',
-    component: () => import('@/views/form/form-upload'),
-    name: 'upload'
   },
 
   {
@@ -175,7 +175,7 @@ const createRouter = () => new Router({
 
 const router = createRouter()
 
-export function resetRouter () {
+export function resetRouter() {
   const newRouter = createRouter()
   router.matcher = newRouter.matcher // reset router
 }

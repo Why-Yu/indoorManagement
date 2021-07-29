@@ -1,8 +1,9 @@
 import request from '@/utils/request'
+import GlobalUrl from '@/utils/GlobalUrl'
 
 export function getBluetooth(data) {
   return request({
-    url: '/indoor-management/table/Bluetooth/data',
+    url: GlobalUrl.prefixUrl + '/indoor-management/Bluetooth/table/data',
     method: 'post',
     data
   })
@@ -10,7 +11,7 @@ export function getBluetooth(data) {
 
 export function createBluetooth(data) {
   return request({
-    url: '/indoor-management/table/Bluetooth/create',
+    url: GlobalUrl.prefixUrl + '/indoor-management/Bluetooth/table/create',
     method: 'post',
     data
   })
@@ -18,7 +19,7 @@ export function createBluetooth(data) {
 
 export function deleteBluetooth(data) {
   return request({
-    url: '/indoor-management/table/Bluetooth/delete',
+    url: GlobalUrl.prefixUrl + '/indoor-management/Bluetooth/table/delete',
     method: 'post',
     data
   })
@@ -26,7 +27,7 @@ export function deleteBluetooth(data) {
 
 export function updateBluetooth(data) {
   return request({
-    url: '/indoor-management/table/Bluetooth/update',
+    url: GlobalUrl.prefixUrl + '/indoor-management/Bluetooth/table/update',
     method: 'post',
     data
   })
