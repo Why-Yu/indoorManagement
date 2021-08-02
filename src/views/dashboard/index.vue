@@ -20,7 +20,9 @@ export default {
   mounted() {
     this.$nextTick(() => {
       getDashBoardData().then(response => {
-        this.data = response.data.items
+        for (const [key, value] of Object.entries(response.data)) {
+          this.data.push({ value: value, name: key })
+        }
         this.initChart()
       })
     })
@@ -36,11 +38,11 @@ export default {
       this.chart = echarts.init(document.getElementById('echarts'))
       this.chart.setOption({
         title: {
-          text: 'Dashboard',
+          text: '室内外多源数据管理系统',
           textStyle: {
             fontStyle: 'oblique',
             fontWeight: 'bold',
-            fontSize: 25
+            fontSize: 35
           },
           left: 'center',
           padding: [5, 5, 20, 5]
@@ -58,6 +60,9 @@ export default {
             name: '各数据占比统计',
             type: 'pie',
             roseType: 'radius',
+            label: {
+              fontSize: 16
+            },
             radius: [25, 210],
             center: ['50%', '50%'],
             data: this.data,
@@ -73,12 +78,12 @@ export default {
 
 <style scoped>
 .charts-wrapper {
-  padding: 10px;
+  padding: 30px 10px;
 }
 
 .echarts {
   width: 100%;
-  height: 640px;
+  height: calc(100vh - 110px);
   background-color: #fff;
 }
 </style>

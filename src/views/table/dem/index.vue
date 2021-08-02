@@ -118,8 +118,8 @@ export default {
       })
     },
     handleFind(row) {
-      this.$router.push({ path: '/cesium/index' })
       this.$store.commit('cesium/SET_COORDINATES', { latitude: row.latitude, longitude: row.longitude })
+      this.$router.push({ path: '/cesium/index' })
     },
     handleEdit(row) {
       this.dialogFormVisible = true

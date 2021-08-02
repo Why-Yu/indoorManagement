@@ -12,7 +12,7 @@ const tableTiles = require('./mock-table-tiles')
 const tableDem = require('./mock-table-dem')
 const tableIndoorTopo = require('./mock-table-indoor-topo')
 const tablePlan = require('./mock-table-plan')
-const dashBoard = require('./mock-dashboard')
+// const dashBoard = require('./mock-dashboard')
 
 const mocks = [
   ...user,
@@ -25,8 +25,8 @@ const mocks = [
   ...tableTiles,
   ...tableDem,
   ...tableIndoorTopo,
-  ...tablePlan,
-  ...dashBoard
+  ...tablePlan
+  // ...dashBoard
 ]
 
 // for front mock

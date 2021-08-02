@@ -98,14 +98,14 @@ export default {
     fetchData() {
       this.listLoading = true
       getAp({ page: this.currentPage - 1, size: this.size }).then(response => {
-        this.list = response.data.items
-        this.total = response.data.total
+        this.list = response.data.content
+        this.total = response.data.totalElements
         this.listLoading = false
       })
     },
     handleFind(row) {
+      this.$store.commit('cesium/SET_COORDINATES', { latitude: 0, longitude: 0 })
       this.$router.push({ path: '/cesium/index' })
-      this.$store.commit('cesium/SET_COORDINATES', { latitude: row.latitude, longitude: row.longitude })
     },
     handleEdit(row) {
       this.dialogFormVisible = true
@@ -134,19 +134,19 @@ export default {
     },
     handleCurrentChange(page) {
       getAp({ page: page - 1, size: this.size }).then(response => {
-        this.list = response.data.items
+        this.list = response.data.content
       })
     },
     handleSizeChange(size) {
       if (this.currentPage === 1) {
         getAp({ page: 0, size: size }).then(response => {
-          this.list = response.data.items
+          this.list = response.data.content
         })
         return
       }
       if (this.currentPage * size <= this.total) {
         getAp({ page: this.currentPage - 1, size: size }).then(response => {
-          this.list = response.data.items
+          this.list = response.data.content
         })
       }
     }

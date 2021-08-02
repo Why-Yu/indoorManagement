@@ -29,12 +29,12 @@
       </el-table-column>
       <el-table-column align="center" label="行编号" min-width="170">
         <template slot-scope="scope">
-          {{ scope.row.x }}
+          {{ scope.row.y }}
         </template>
       </el-table-column>
       <el-table-column align="center" label="列编号" min-width="170">
         <template slot-scope="scope">
-          {{ scope.row.y }}
+          {{ scope.row.x }}
         </template>
       </el-table-column>
       <el-table-column align="center" label="缩略图" min-width="240">
@@ -111,9 +111,20 @@ export default {
         this.listLoading = false
       })
     },
+    // 瓦片序号到经纬度的换算，返回瓦片左上角经纬度
+    // 注意返回纬度范围是[-85.0511, 85.0511]
+    tile2lng(col, zoom) {
+      return (col / Math.pow(2, zoom) * 360 - 180)
+    },
+    tile2lat(row, zoom) {
+      const n = Math.PI - 2 * Math.PI * row / Math.pow(2, zoom)
+      return (180 / Math.PI * Math.atan(0.5 * (Math.exp(n) - Math.exp(-n))))
+    },
     handleFind(row) {
+      const lng = this.tile2lng(row.x, row.zoom)
+      const lat = this.tile2lat(row.y, row.zoom)
+      this.$store.commit('cesium/SET_COORDINATES', { latitude: lat, longitude: lng })
       this.$router.push({ path: '/cesium/index' })
-      this.$store.commit('cesium/SET_COORDINATES', { latitude: row.latitude, longitude: row.longitude })
     },
     handleEdit(row) {
       this.dialogFormVisible = true

@@ -22,8 +22,8 @@ module.exports = [
       if (!haveProcessed) {
         haveProcessed = true
         items.forEach(item => {
-          item.x = Math.pow(2, item.zoom)
-          item.y = Math.pow(2, item.zoom - 1)
+          item.x = Math.pow(2, item.zoom) - 1
+          item.y = Math.pow(2, item.zoom) - 1
         })
       }
       return {

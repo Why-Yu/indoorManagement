@@ -1,8 +1,9 @@
 import request from '@/utils/request'
+import GlobalUrl from '@/utils/GlobalUrl'
 
 export function getDashBoardData() {
   return request({
-    url: '/indoor-management/DashBoard/data',
+    url: GlobalUrl.prefixUrl + '/indoor-management/DashBoard/data',
     method: 'get'
   })
 }

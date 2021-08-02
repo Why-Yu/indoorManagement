@@ -127,8 +127,12 @@ export default {
       })
     },
     handleFind(row) {
+      // 墨卡托到经纬度换算
+      const lng = row.beginX / 20037508.34 * 180
+      let lat = row.beginY / 20037508.34 * 180
+      lat = 180 / Math.PI * (2 * Math.atan(Math.exp(lat * Math.PI / 180)) - Math.PI / 2)
+      this.$store.commit('cesium/SET_COORDINATES', { latitude: lat, longitude: lng })
       this.$router.push({ path: '/cesium/index' })
-      this.$store.commit('cesium/SET_COORDINATES', { latitude: row.latitude, longitude: row.longitude })
     },
     handleEdit(row) {
       this.dialogFormVisible = true

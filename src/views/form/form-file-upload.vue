@@ -50,12 +50,16 @@ export default {
       }, {
         label: 'Wifi',
         value: 'Wifi'
+      }, {
+        label: 'IndoorTopo',
+        value: 'IndoorTopo'
       }],
       fileList: [],
       accept: {
         Ap: '.xls,.xlsx',
         Bluetooth: '.xls,.xlsx',
-        Wifi: '.xls,.xlsx'
+        Wifi: '.xls,.xlsx',
+        IndoorTopo: '.shp'
       }
     }
   },

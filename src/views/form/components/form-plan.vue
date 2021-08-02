@@ -10,6 +10,12 @@
       <el-form-item label="存储路径" :label-width="formLabelWidth">
         <el-input v-model="localFormData.path" />
       </el-form-item>
+      <el-form-item label="经度" :label-width="formLabelWidth">
+        <el-input v-model="localFormData.longitude" />
+      </el-form-item>
+      <el-form-item label="纬度" :label-width="formLabelWidth">
+        <el-input v-model="localFormData.latitude" />
+      </el-form-item>
     </el-form>
     <div slot="footer" class="dialog-footer">
       <el-button @click="clickNo">取 消</el-button>

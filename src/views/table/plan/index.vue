@@ -22,12 +22,12 @@
           {{ scope.row.name }}
         </template>
       </el-table-column>
-      <el-table-column align="center" label="存储路径" min-width="300">
+      <el-table-column align="center" label="存储路径" min-width="280">
         <template slot-scope="scope">
           {{ scope.row.path }}
         </template>
       </el-table-column>
-      <el-table-column align="center" label="平面缩略图" min-width="250">
+      <el-table-column align="center" label="平面缩略图" min-width="200">
         <template slot-scope="scope">
           <el-image
             :src="scope.row.image"
@@ -35,7 +35,17 @@
           />
         </template>
       </el-table-column>
-      <el-table-column align="center" label="操作" min-width="300">
+      <el-table-column align="center" label="经度" min-width="160">
+        <template slot-scope="scope">
+          {{ scope.row.longitude }}
+        </template>
+      </el-table-column>
+      <el-table-column align="center" label="纬度" min-width="160">
+        <template slot-scope="scope">
+          {{ scope.row.latitude }}
+        </template>
+      </el-table-column>
+      <el-table-column align="center" label="操作" min-width="285">
         <template slot-scope="scope">
           <el-button icon="el-icon-search" size="small" round @click="handleFind(scope.row)">
             查看
@@ -83,7 +93,9 @@ export default {
       localFormData: {
         index: 0,
         name: '',
-        path: ''
+        path: '',
+        longitude: 0,
+        latitude: 0
       }
     }
   },
@@ -100,8 +112,8 @@ export default {
       })
     },
     handleFind(row) {
-      this.$router.push({ path: '/cesium/index' })
       this.$store.commit('cesium/SET_COORDINATES', { latitude: row.latitude, longitude: row.longitude })
+      this.$router.push({ path: '/cesium/index' })
     },
     handleEdit(row) {
       this.dialogFormVisible = true

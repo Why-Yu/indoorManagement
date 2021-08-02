@@ -5,7 +5,9 @@ const data = Mock.mock({
     'index|+1': 0,
     name: '@cword(7)',
     path: '@url',
-    image: "@image(50x50, @color, 'mock')"
+    image: "@image(50x50, @color, 'mock')",
+    longitude: '@float(-180, 180)',
+    latitude: '@float(-80, 80)'
   }]
 })
 
