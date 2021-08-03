@@ -1,8 +1,9 @@
 import request from '@/utils/request'
+import GlobalUrl from '@/utils/GlobalUrl'
 
 export function getIndoorTopo(data) {
   return request({
-    url: '/indoor-management/table/IndoorTopo/data',
+    url: GlobalUrl.prefixUrl + '/indoor-management/IndoorTopo/table/data',
     method: 'post',
     data
   })
@@ -10,7 +11,7 @@ export function getIndoorTopo(data) {
 
 export function createIndoorTopo(data) {
   return request({
-    url: '/indoor-management/table/IndoorTopo/create',
+    url: GlobalUrl.prefixUrl + '/indoor-management/IndoorTopo/table/create',
     method: 'post',
     data
   })
@@ -18,7 +19,7 @@ export function createIndoorTopo(data) {
 
 export function deleteIndoorTopo(data) {
   return request({
-    url: '/indoor-management/table/IndoorTopo/delete',
+    url: GlobalUrl.prefixUrl + '/indoor-management/IndoorTopo/table/delete',
     method: 'post',
     data
   })
@@ -26,7 +27,7 @@ export function deleteIndoorTopo(data) {
 
 export function updateIndoorTopo(data) {
   return request({
-    url: '/indoor-management/table/IndoorTopo/update',
+    url: GlobalUrl.prefixUrl + '/indoor-management/IndoorTopo/table/update',
     method: 'post',
     data
   })

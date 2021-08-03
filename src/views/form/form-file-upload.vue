@@ -4,40 +4,50 @@
       <div slot="header">
         <span class="title">文件数据入库</span>
       </div>
-      <el-form label-width="150px">
-        <el-form-item label="选择上传的数据库">
-          <el-select v-model="type" placeholder="请选择">
-            <el-option
-              v-for="item in options"
-              :key="item.value"
-              :label="item.label"
-              :value="item.value"
-            />
-          </el-select>
-        </el-form-item>
-        <el-form-item label="选择文件">
-          <el-upload
-            ref="upload"
-            :action="getUploadPath(type)"
-            :file-list="fileList"
-            :auto-upload="false"
-            :accept="getExtension(type)"
-            :on-success="fileSuccessUpLoad"
-          >
-            <el-button slot="trigger" size="medium" type="primary">选取文件</el-button>
-            <div slot="tip">请注意上传对应格式的文件</div>
-          </el-upload>
-        </el-form-item>
-        <el-button id="btn" size="medium" type="success" @click="submitUpload">上传到服务器</el-button>
-      </el-form>
+      <el-steps :active="active" finish-status="success" align-center>
+        <el-step title="选择上传类型" />
+        <el-step title="输入上传参数及选择数据文件" />
+        <el-step title="上传完成" />
+      </el-steps>
+
+      <div class="formWrapper">
+        <el-form label-width="150px">
+          <div v-show="active === 0">
+            <el-form-item label="选择上传的数据库">
+              <el-select v-model="type" placeholder="请选择">
+                <el-option
+                  v-for="item in options"
+                  :key="item.value"
+                  :label="item.label"
+                  :value="item.value"
+                />
+              </el-select>
+            </el-form-item>
+            <el-button id="next0" size="medium" type="primary" plain @click="next">下一步</el-button>
+          </div>
+
+          <div v-show="active === 1">
+            <el-form-item>
+              <form-upload-excel v-if="uploadExcel.includes(type)" :type="type" :active.sync="active" />
+              <form-upload-shape v-else-if="uploadShape.includes(type)" :type="type" :active.sync="active" />
+            </el-form-item>
+          </div>
+
+          <div v-show="active === 2">
+            <el-button id="next2" size="medium" type="success" plain @click="next">已完成上传</el-button>
+          </div>
+        </el-form>
+      </div>
     </el-card>
   </div>
 </template>
 
 <script>
-import GlobalUrl from '@/utils/GlobalUrl'
+import FormUploadExcel from '@/views/form/components/form-upload-excel'
+import FormUploadShape from '@/views/form/components/form-upload-shape'
 
 export default {
+  components: { FormUploadShape, FormUploadExcel },
   data() {
     return {
       type: 'Ap',
@@ -54,31 +64,14 @@ export default {
         label: 'IndoorTopo',
         value: 'IndoorTopo'
       }],
-      fileList: [],
-      accept: {
-        Ap: '.xls,.xlsx',
-        Bluetooth: '.xls,.xlsx',
-        Wifi: '.xls,.xlsx',
-        IndoorTopo: '.shp'
-      }
+      active: 0,
+      uploadExcel: ['Ap', 'Bluetooth', 'Wifi'],
+      uploadShape: ['IndoorTopo']
     }
   },
   methods: {
-    submitUpload() {
-      this.$refs.upload.submit()
-    },
-    fileSuccessUpLoad() {
-      this.$refs.upload.clearFiles()
-      this.$message({
-        message: '上传成功',
-        type: 'success'
-      })
-    },
-    getExtension(type) {
-      return this.accept[type]
-    },
-    getUploadPath(type) {
-      return GlobalUrl.prefixUrl + '/indoor-management/' + type + '/importData'
+    next() {
+      if (++this.active > 2) this.active = 0
     }
   }
 }
@@ -87,15 +80,20 @@ export default {
 <style scoped>
 #container {
   width: 70%;
-  margin: 50px auto auto;
+  margin: 30px auto auto;
 }
 
 #myCard {
-  padding: 25px 25%;
+  padding: 25px 15%;
 }
 
-#btn {
+#next0 {
   margin-bottom: 10px;
+  float: right;
+}
+
+#next2 {
+  margin: 40px 20px 20px;
   float: right;
 }
 
@@ -103,5 +101,9 @@ export default {
   text-align: center;
   font-size: 1.3em;
   display: block;
+}
+
+.formWrapper {
+  padding: 40px 10px;
 }
 </style>
