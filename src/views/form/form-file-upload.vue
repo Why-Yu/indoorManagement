@@ -30,6 +30,7 @@
             <el-form-item>
               <form-upload-excel v-if="uploadExcel.includes(type)" :type="type" :active.sync="active" />
               <form-upload-shape v-else-if="uploadShape.includes(type)" :type="type" :active.sync="active" />
+              <form-upload-image v-else-if="uploadImage.includes(type)" :type="type" :active.sync="active" />
             </el-form-item>
           </div>
 
@@ -45,9 +46,10 @@
 <script>
 import FormUploadExcel from '@/views/form/components/form-upload-excel'
 import FormUploadShape from '@/views/form/components/form-upload-shape'
+import FormUploadImage from '@/views/form/components/form-upload-image'
 
 export default {
-  components: { FormUploadShape, FormUploadExcel },
+  components: { FormUploadImage, FormUploadShape, FormUploadExcel },
   data() {
     return {
       type: 'Ap',
@@ -63,10 +65,15 @@ export default {
       }, {
         label: 'IndoorTopo',
         value: 'IndoorTopo'
-      }],
+      }, {
+        label: 'Tiles',
+        value: 'Tiles'
+      }
+      ],
       active: 0,
       uploadExcel: ['Ap', 'Bluetooth', 'Wifi'],
-      uploadShape: ['IndoorTopo']
+      uploadShape: ['IndoorTopo'],
+      uploadImage: ['Tiles']
     }
   },
   methods: {

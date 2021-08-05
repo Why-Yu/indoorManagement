@@ -1,7 +1,7 @@
 const Mock = require('mockjs')
 
 const data = Mock.mock({
-  'items|100': [{
+  'items|10': [{
     'index|+1': 0,
     name: '@cword(7)',
     path: '@url',

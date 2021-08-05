@@ -66,7 +66,7 @@
 </template>
 
 <script>
-import { getBluetooth, createBluetooth, deleteBluetooth } from '@/api/api-table-bluetooth'
+import { getBluetooth, deleteBluetooth } from '@/api/api-table-bluetooth'
 import FormBluetooth from '@/views/form/components/form-bluetooth'
 
 export default {

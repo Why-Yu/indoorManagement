@@ -66,7 +66,7 @@
 </template>
 
 <script>
-import { get3dTiles, create3dTiles, delete3dTiles } from '@/api/api-table-3dTiles'
+import { get3dTiles, delete3dTiles } from '@/api/api-table-3dTiles'
 import Form3dTiles from '@/views/form/components/form-3d-tiles'
 
 export default {

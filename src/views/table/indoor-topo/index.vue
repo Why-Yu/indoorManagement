@@ -86,7 +86,7 @@
 </template>
 
 <script>
-import { getIndoorTopo, createIndoorTopo, deleteIndoorTopo } from '@/api/api-table-indoor-topo'
+import { getIndoorTopo, deleteIndoorTopo } from '@/api/api-table-indoor-topo'
 import FormIndoorTopo from '@/views/form/components/form-indoor-topo'
 
 export default {

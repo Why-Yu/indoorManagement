@@ -74,7 +74,7 @@
 </template>
 
 <script>
-import { getPlan, createPlan, deletePlan } from '@/api/api-table-plan'
+import { getPlan, deletePlan } from '@/api/api-table-plan'
 import FormPlan from '@/views/form/components/form-plan'
 
 export default {

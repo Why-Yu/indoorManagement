@@ -66,7 +66,7 @@
 </template>
 
 <script>
-import { getWifi, createWifi, deleteWifi } from '@/api/api-table-wifi'
+import { getWifi, deleteWifi } from '@/api/api-table-wifi'
 import FormWifi from '@/views/form/components/form-wifi'
 
 export default {

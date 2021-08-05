@@ -11,10 +11,10 @@
         <el-input v-model="localFormData.zoom" />
       </el-form-item>
       <el-form-item label="行编号" :label-width="formLabelWidth">
-        <el-input v-model="localFormData.x" />
+        <el-input v-model="localFormData.row" />
       </el-form-item>
       <el-form-item label="列编号" :label-width="formLabelWidth">
-        <el-input v-model="localFormData.y" />
+        <el-input v-model="localFormData.col" />
       </el-form-item>
     </el-form>
     <div slot="footer" class="dialog-footer">

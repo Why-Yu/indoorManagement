@@ -1,8 +1,9 @@
 import request from '@/utils/request'
+import GlobalUrl from '@/utils/GlobalUrl'
 
 export function getTiles(data) {
   return request({
-    url: '/indoor-management/table/Tiles/data',
+    url: GlobalUrl.prefixUrl + '/indoor-management/Tiles/table/data',
     method: 'post',
     data
   })
@@ -10,7 +11,7 @@ export function getTiles(data) {
 
 export function createTiles(data) {
   return request({
-    url: '/indoor-management/table/Tiles/create',
+    url: GlobalUrl.prefixUrl + '/indoor-management/Tiles/table/create',
     method: 'post',
     data
   })
@@ -18,7 +19,7 @@ export function createTiles(data) {
 
 export function deleteTiles(data) {
   return request({
-    url: '/indoor-management/table/Tiles/delete',
+    url: GlobalUrl.prefixUrl + '/indoor-management/Tiles/table/delete',
     method: 'post',
     data
   })
@@ -26,8 +27,9 @@ export function deleteTiles(data) {
 
 export function updateTiles(data) {
   return request({
-    url: '/indoor-management/table/Tiles/update',
+    url: GlobalUrl.prefixUrl + '/indoor-management/Tiles/table/update',
     method: 'post',
     data
   })
 }
+

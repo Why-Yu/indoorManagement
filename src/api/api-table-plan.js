@@ -31,3 +31,4 @@ export function updatePlan(data) {
     data
   })
 }
+

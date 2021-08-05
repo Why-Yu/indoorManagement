@@ -8,7 +8,7 @@ const table3dTiles = require('./mock-table-3dTiles')
 // const tableBluetooth = require('./mock-table-bluetooth')
 // const tableWifi = require('./mock-table-wifi')
 const tableRemoteImage = require('./mock-table-remoteImage')
-const tableTiles = require('./mock-table-tiles')
+// const tableTiles = require('./mock-table-tiles')
 const tableDem = require('./mock-table-dem')
 // const tableIndoorTopo = require('./mock-table-indoor-topo')
 const tablePlan = require('./mock-table-plan')
@@ -22,7 +22,7 @@ const mocks = [
   // ...tableBluetooth,
   // ...tableWifi,
   ...tableRemoteImage,
-  ...tableTiles,
+  // ...tableTiles,
   ...tableDem,
   // ...tableIndoorTopo,
   ...tablePlan

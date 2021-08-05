@@ -81,7 +81,7 @@
 </template>
 
 <script>
-import { getPoi, createPoi, deletePoi } from '@/api/api-table-poi'
+import { getPoi, deletePoi } from '@/api/api-table-poi'
 import FormPoi from '@/views/form/components/form-poi'
 
 export default {

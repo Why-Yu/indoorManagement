@@ -66,7 +66,7 @@
 </template>
 
 <script>
-import { getAp, createAp, deleteAp } from '@/api/api-table-ap'
+import { getAp, deleteAp } from '@/api/api-table-ap'
 import FormAp from '@/views/form/components/form-ap'
 
 export default {

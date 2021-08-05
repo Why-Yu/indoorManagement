@@ -89,7 +89,7 @@
 </template>
 
 <script>
-import { getRemoteImage, createRemoteImage, deleteRemoteImage } from '@/api/api-table-remoteImage'
+import { getRemoteImage, deleteRemoteImage } from '@/api/api-table-remoteImage'
 import FormRemoteImage from '@/views/form/components/form-remote-image'
 
 export default {

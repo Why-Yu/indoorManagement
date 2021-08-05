@@ -79,7 +79,7 @@
 </template>
 
 <script>
-import { getDem, createDem, deleteDem } from '@/api/api-table-dem'
+import { getDem, deleteDem } from '@/api/api-table-dem'
 import FormDem from '@/views/form/components/form-dem'
 
 export default {

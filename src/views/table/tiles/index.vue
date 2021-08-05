@@ -29,18 +29,19 @@
       </el-table-column>
       <el-table-column align="center" label="行编号" min-width="170">
         <template slot-scope="scope">
-          {{ scope.row.y }}
+          {{ scope.row.row }}
         </template>
       </el-table-column>
       <el-table-column align="center" label="列编号" min-width="170">
         <template slot-scope="scope">
-          {{ scope.row.x }}
+          {{ scope.row.col }}
         </template>
       </el-table-column>
       <el-table-column align="center" label="缩略图" min-width="240">
         <template slot-scope="scope">
           <el-image
-            :src="scope.row.image"
+            style="width: 60px; height: 60px"
+            :src="getImageSrc(scope.row)"
             :fit="fit"
           />
         </template>
@@ -74,8 +75,9 @@
 </template>
 
 <script>
-import { getTiles, createTiles, deleteTiles } from '@/api/api-table-tiles'
+import { getTiles, deleteTiles } from '@/api/api-table-tiles'
 import FormTiles from '@/views/form/components/form-tiles'
+import GlobalUrl from '@/utils/GlobalUrl'
 
 export default {
   components: { FormTiles },
@@ -94,9 +96,10 @@ export default {
         index: 0,
         name: '',
         zoom: 0,
-        x: 0,
-        y: 0
-      }
+        row: 0,
+        col: 0
+      },
+      extension: '.png'
     }
   },
   created() {
@@ -106,10 +109,14 @@ export default {
     fetchData() {
       this.listLoading = true
       getTiles({ page: this.currentPage - 1, size: this.size }).then(response => {
-        this.list = response.data.items
-        this.total = response.data.total
+        this.list = response.data.content
+        this.total = response.data.totalElements
         this.listLoading = false
       })
+    },
+    getImageSrc(row) {
+      return GlobalUrl.prefixUrl + '/indoor-management/Tiles/' + row.name + '/' + row.zoom +
+          '/' + row.row + '/' + row.col + this.extension
     },
     // 瓦片序号到经纬度的换算，返回瓦片左上角经纬度
     // 注意返回纬度范围是[-85.0511, 85.0511]
@@ -121,8 +128,8 @@ export default {
       return (180 / Math.PI * Math.atan(0.5 * (Math.exp(n) - Math.exp(-n))))
     },
     handleFind(row) {
-      const lng = this.tile2lng(row.x, row.zoom)
-      const lat = this.tile2lat(row.y, row.zoom)
+      const lng = this.tile2lng(row.col, row.zoom)
+      const lat = this.tile2lat(row.row, row.zoom)
       this.$store.commit('cesium/SET_COORDINATES', { latitude: lat, longitude: lng })
       this.$router.push({ path: '/cesium/index' })
     },
@@ -153,19 +160,19 @@ export default {
     },
     handleCurrentChange(page) {
       getTiles({ page: page - 1, size: this.size }).then(response => {
-        this.list = response.data.items
+        this.list = response.data.content
       })
     },
     handleSizeChange(size) {
       if (this.currentPage === 1) {
         getTiles({ page: 0, size: size }).then(response => {
-          this.list = response.data.items
+          this.list = response.data.content
         })
         return
       }
       if (this.currentPage * size <= this.total) {
         getTiles({ page: this.currentPage - 1, size: size }).then(response => {
-          this.list = response.data.items
+          this.list = response.data.content
         })
       }
     }
