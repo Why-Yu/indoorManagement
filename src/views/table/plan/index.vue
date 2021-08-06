@@ -22,15 +22,16 @@
           {{ scope.row.name }}
         </template>
       </el-table-column>
-      <el-table-column align="center" label="存储路径" min-width="280">
+      <el-table-column align="center" label="存储路径" min-width="300">
         <template slot-scope="scope">
           {{ scope.row.path }}
         </template>
       </el-table-column>
-      <el-table-column align="center" label="平面缩略图" min-width="200">
+      <el-table-column align="center" label="室内平面缩略图" min-width="180">
         <template slot-scope="scope">
           <el-image
-            :src="scope.row.image"
+            style="width: 60px; height: 60px"
+            :src="getImageSrc(scope.row)"
             :fit="fit"
           />
         </template>
@@ -76,6 +77,7 @@
 <script>
 import { getPlan, deletePlan } from '@/api/api-table-plan'
 import FormPlan from '@/views/form/components/form-plan'
+import GlobalUrl from '@/utils/GlobalUrl'
 
 export default {
   components: { FormPlan },
@@ -106,10 +108,13 @@ export default {
     fetchData() {
       this.listLoading = true
       getPlan({ page: this.currentPage - 1, size: this.size }).then(response => {
-        this.list = response.data.items
-        this.total = response.data.total
+        this.list = response.data.content
+        this.total = response.data.totalElements
         this.listLoading = false
       })
+    },
+    getImageSrc(row) {
+      return GlobalUrl.prefixUrl + '/indoor-management/Plan/' + row.index
     },
     handleFind(row) {
       this.$store.commit('cesium/SET_COORDINATES', { latitude: row.latitude, longitude: row.longitude })
@@ -142,19 +147,19 @@ export default {
     },
     handleCurrentChange(page) {
       getPlan({ page: page - 1, size: this.size }).then(response => {
-        this.list = response.data.items
+        this.list = response.data.content
       })
     },
     handleSizeChange(size) {
       if (this.currentPage === 1) {
         getPlan({ page: 0, size: size }).then(response => {
-          this.list = response.data.items
+          this.list = response.data.content
         })
         return
       }
       if (this.currentPage * size <= this.total) {
         getPlan({ page: this.currentPage - 1, size: size }).then(response => {
-          this.list = response.data.items
+          this.list = response.data.content
         })
       }
     }

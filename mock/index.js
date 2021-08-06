@@ -11,7 +11,7 @@ const tableRemoteImage = require('./mock-table-remoteImage')
 // const tableTiles = require('./mock-table-tiles')
 const tableDem = require('./mock-table-dem')
 // const tableIndoorTopo = require('./mock-table-indoor-topo')
-const tablePlan = require('./mock-table-plan')
+// const tablePlan = require('./mock-table-plan')
 // const dashBoard = require('./mock-dashboard')
 
 const mocks = [
@@ -23,9 +23,9 @@ const mocks = [
   // ...tableWifi,
   ...tableRemoteImage,
   // ...tableTiles,
-  ...tableDem,
+  ...tableDem
   // ...tableIndoorTopo,
-  ...tablePlan
+  // ...tablePlan
   // ...dashBoard
 ]
 

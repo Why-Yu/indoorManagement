@@ -1,8 +1,9 @@
 import request from '@/utils/request'
+import GlobalUrl from '@/utils/GlobalUrl'
 
 export function getPlan(data) {
   return request({
-    url: '/indoor-management/table/Plan/data',
+    url: GlobalUrl.prefixUrl + '/indoor-management/Plan/table/data',
     method: 'post',
     data
   })
@@ -10,7 +11,7 @@ export function getPlan(data) {
 
 export function createPlan(data) {
   return request({
-    url: '/indoor-management/table/Plan/create',
+    url: GlobalUrl.prefixUrl + '/indoor-management/Plan/table/create',
     method: 'post',
     data
   })
@@ -18,7 +19,7 @@ export function createPlan(data) {
 
 export function deletePlan(data) {
   return request({
-    url: '/indoor-management/table/Plan/delete',
+    url: GlobalUrl.prefixUrl + '/indoor-management/Plan/table/delete',
     method: 'post',
     data
   })
@@ -26,7 +27,7 @@ export function deletePlan(data) {
 
 export function updatePlan(data) {
   return request({
-    url: '/indoor-management/table/Plan/update',
+    url: GlobalUrl.prefixUrl + '/indoor-management/Plan/table/update',
     method: 'post',
     data
   })

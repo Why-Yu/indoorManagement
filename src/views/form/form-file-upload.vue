@@ -32,6 +32,7 @@
               <form-upload-shape v-else-if="uploadShape.includes(type)" :type="type" :active.sync="active" />
               <form-upload-image v-else-if="uploadImage.includes(type)" :type="type" :active.sync="active" />
               <form-upload-tdtiles v-else-if="uploadDirectory.includes(type)" :type="type" :active.sync="active" />
+              <form-upload-plan v-else-if="uploadPlan.includes(type)" :type="type" :active.sync="active" />
             </el-form-item>
           </div>
 
@@ -49,9 +50,10 @@ import FormUploadExcel from '@/views/form/components/form-upload-excel'
 import FormUploadShape from '@/views/form/components/form-upload-shape'
 import FormUploadImage from '@/views/form/components/form-upload-image'
 import FormUploadTdtiles from '@/views/form/components/form-upload-tdtiles'
+import FormUploadPlan from '@/views/form/components/form-upload-plan'
 
 export default {
-  components: { FormUploadTdtiles, FormUploadImage, FormUploadShape, FormUploadExcel },
+  components: { FormUploadPlan, FormUploadTdtiles, FormUploadImage, FormUploadShape, FormUploadExcel },
   data() {
     return {
       type: 'Ap',
@@ -73,13 +75,17 @@ export default {
       }, {
         label: '3dTiles',
         value: 'TdTiles'
+      }, {
+        label: 'Plan',
+        value: 'Plan'
       }
       ],
       active: 0,
       uploadExcel: ['Ap', 'Bluetooth', 'Wifi'],
       uploadShape: ['IndoorTopo'],
       uploadImage: ['Tiles'],
-      uploadDirectory: ['TdTiles']
+      uploadDirectory: ['TdTiles'],
+      uploadPlan: ['Plan']
     }
   },
   methods: {
