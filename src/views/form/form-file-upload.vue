@@ -31,6 +31,7 @@
               <form-upload-excel v-if="uploadExcel.includes(type)" :type="type" :active.sync="active" />
               <form-upload-shape v-else-if="uploadShape.includes(type)" :type="type" :active.sync="active" />
               <form-upload-image v-else-if="uploadImage.includes(type)" :type="type" :active.sync="active" />
+              <form-upload-tdtiles v-else-if="uploadDirectory.includes(type)" :type="type" :active.sync="active" />
             </el-form-item>
           </div>
 
@@ -47,9 +48,10 @@
 import FormUploadExcel from '@/views/form/components/form-upload-excel'
 import FormUploadShape from '@/views/form/components/form-upload-shape'
 import FormUploadImage from '@/views/form/components/form-upload-image'
+import FormUploadTdtiles from '@/views/form/components/form-upload-tdtiles'
 
 export default {
-  components: { FormUploadImage, FormUploadShape, FormUploadExcel },
+  components: { FormUploadTdtiles, FormUploadImage, FormUploadShape, FormUploadExcel },
   data() {
     return {
       type: 'Ap',
@@ -68,12 +70,16 @@ export default {
       }, {
         label: 'Tiles',
         value: 'Tiles'
+      }, {
+        label: '3dTiles',
+        value: 'TdTiles'
       }
       ],
       active: 0,
       uploadExcel: ['Ap', 'Bluetooth', 'Wifi'],
       uploadShape: ['IndoorTopo'],
-      uploadImage: ['Tiles']
+      uploadImage: ['Tiles'],
+      uploadDirectory: ['TdTiles']
     }
   },
   methods: {

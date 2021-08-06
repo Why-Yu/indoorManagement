@@ -2,32 +2,11 @@
   <div>
     <el-form ref="ruleForm" :model="localFormData" :rules="rules">
       <el-form-item
-        label="瓦片集名称"
+        label="3dTiles名称"
         :label-width="formLabelWidth"
         prop="name"
       >
         <el-input v-model="localFormData.name" />
-      </el-form-item>
-      <el-form-item
-        label="缩放层级"
-        :label-width="formLabelWidth"
-        prop="zoom"
-      >
-        <el-input v-model="localFormData.zoom" />
-      </el-form-item>
-      <el-form-item
-        label="行编号"
-        :label-width="formLabelWidth"
-        prop="row"
-      >
-        <el-input v-model="localFormData.row" />
-      </el-form-item>
-      <el-form-item
-        label="列编号"
-        :label-width="formLabelWidth"
-        prop="col"
-      >
-        <el-input v-model="localFormData.col" />
       </el-form-item>
     </el-form>
     <div class="uploadWrapper">
@@ -36,13 +15,14 @@
         :action="getUploadPath(type)"
         :file-list="fileList"
         :auto-upload="false"
-        :accept="getExtension(type)"
         :data="localFormData"
-        :multiple="false"
-        :on-success="fileSuccessUpLoad"
+        :multiple="true"
+        :on-success="handleSuccess"
+        :on-change="handleChange"
+        :on-remove="handleRemove"
       >
         <el-button slot="trigger" size="medium" type="primary">选取文件</el-button>
-        <div slot="tip" class="tooltip">已选择{{ type }}, 注意:请上传png格式的文件</div>
+        <div slot="tip" class="tooltip">已选择3dTiles, 注意:请选择需要上传的3dTiles的根目录，系统会自行解析所有子文件</div>
       </el-upload>
       <el-button id="upload" size="medium" type="success" plain @click="submitUpload">上传到服务器</el-button>
       <el-button id="pre" size="medium" type="primary" plain @click="pre">上一步</el-button>
@@ -51,13 +31,14 @@
 </template>
 
 <script>
+import { importData } from '@/api/api-table-3dTiles'
 import GlobalUrl from '@/utils/GlobalUrl'
 
 export default {
   props: {
     type: {
       type: String,
-      default: 'Tiles'
+      default: 'TdTiles'
     },
     active: {
       type: Number,
@@ -70,28 +51,20 @@ export default {
       rules: {
         name: [
           { required: true, message: '请输入瓦片集名称', trigger: 'blur' }
-        ],
-        zoom: [
-          { required: true, message: '请输入缩放层级', trigger: 'blur' }
-        ],
-        row: [
-          { required: true, message: '请输入行编号', trigger: 'blur' }
-        ],
-        col: [
-          { required: true, message: '请输入列编号', trigger: 'blur' }
         ]
       },
       fileList: [],
-      accept: {
-        Tiles: '.png'
-      },
       localFormData: {
-        name: 'GlobalTiles',
-        zoom: '',
-        row: '',
-        col: ''
-      }
+        name: ''
+      },
+      isUploadFlag: false
     }
+  },
+  mounted() {
+    this.$nextTick(() => {
+      // 强行开启目录上传，同时为了实现一次请求上传，后续带来了花了好久才解决的bug
+      document.getElementsByClassName('el-upload__input')[0].webkitdirectory = true
+    })
   },
   methods: {
     pre() {
@@ -100,22 +73,39 @@ export default {
     submitUpload() {
       this.$refs.ruleForm.validate((valid) => {
         if (valid) {
-          this.$refs.upload.submit()
+          // this.$refs.upload.submit()
+          // 目录上传以后，后端接受到的文件名就是按照webkitRelativePath生成的
+          // 所以无需在参数中加入relativePath
+          const formData = new FormData()
+          this.fileList.forEach(file => {
+            formData.append('file', file.raw)
+          })
+          formData.append('name', this.localFormData.name)
+          importData(formData).then(() => {
+            // 手动清空fileList，不再用this.$refs.upload.clearFiles()
+            // 因为这里把所有file在一次请求中上传，但http-request仍会调用fileList.size()次，不太方便在里面的回调中调用onSuccess
+            this.fileList = []
+          })
           this.$emit('update:active', this.active + 1)
         } else {
           this.$message.error('表单参数有误')
         }
       })
     },
-    fileSuccessUpLoad() {
+    handleSuccess() {
+      // 这个函数其实不会执行
       this.$refs.upload.clearFiles()
       this.$message({
         message: '上传成功',
         type: 'success'
       })
     },
-    getExtension(type) {
-      return this.accept[type]
+
+    handleChange(file, fileList) {
+      this.fileList = fileList
+    },
+    handleRemove(file, fileList) {
+      this.fileList = fileList
     },
     getUploadPath(type) {
       return GlobalUrl.prefixUrl + '/indoor-management/' + type + '/importData'

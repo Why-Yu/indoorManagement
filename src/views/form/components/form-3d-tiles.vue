@@ -7,7 +7,7 @@
       <el-form-item label="名称" :label-width="formLabelWidth">
         <el-input v-model="localFormData.name" />
       </el-form-item>
-      <el-form-item label="存储路径" :label-width="formLabelWidth">
+      <el-form-item label="存储根路径" :label-width="formLabelWidth">
         <el-input v-model="localFormData.path" />
       </el-form-item>
       <el-form-item label="经度" :label-width="formLabelWidth">

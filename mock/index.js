@@ -3,7 +3,7 @@ const { param2Obj } = require('./utils')
 
 const user = require('./user')
 const tablePoi = require('./mock-table-poi')
-const table3dTiles = require('./mock-table-3dTiles')
+// const table3dTiles = require('./mock-table-3dTiles')
 // const tableAp = require('./mock-table-ap')
 // const tableBluetooth = require('./mock-table-bluetooth')
 // const tableWifi = require('./mock-table-wifi')
@@ -17,7 +17,7 @@ const tablePlan = require('./mock-table-plan')
 const mocks = [
   ...user,
   ...tablePoi,
-  ...table3dTiles,
+  // ...table3dTiles,
   // ...tableAp,
   // ...tableBluetooth,
   // ...tableWifi,

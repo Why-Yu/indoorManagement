@@ -22,7 +22,7 @@
           {{ scope.row.name }}
         </template>
       </el-table-column>
-      <el-table-column align="center" label="存储路径" min-width="250">
+      <el-table-column align="center" label="存储根路径" min-width="250">
         <template slot-scope="scope">
           {{ scope.row.path }}
         </template>
@@ -97,8 +97,8 @@ export default {
     fetchData() {
       this.listLoading = true
       get3dTiles({ page: this.currentPage - 1, size: this.size }).then(response => {
-        this.list = response.data.items
-        this.total = response.data.total
+        this.list = response.data.content
+        this.total = response.data.totalElements
         this.listLoading = false
       })
     },
@@ -136,19 +136,19 @@ export default {
     },
     handleCurrentChange(page) {
       get3dTiles({ page: page - 1, size: this.size }).then(response => {
-        this.list = response.data.items
+        this.list = response.data.content
       })
     },
     handleSizeChange(size) {
       if (this.currentPage === 1) {
         get3dTiles({ page: 0, size: size }).then(response => {
-          this.list = response.data.items
+          this.list = response.data.content
         })
         return
       }
       if (this.currentPage * size <= this.total) {
         get3dTiles({ page: this.currentPage - 1, size: size }).then(response => {
-          this.list = response.data.items
+          this.list = response.data.content
         })
       }
     }
