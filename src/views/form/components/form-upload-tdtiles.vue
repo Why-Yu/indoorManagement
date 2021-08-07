@@ -22,7 +22,7 @@
         :on-remove="handleRemove"
       >
         <el-button slot="trigger" size="medium" type="primary">选取文件</el-button>
-        <div slot="tip" class="tooltip">已选择3dTiles, 注意:请选择需要上传的3dTiles的根目录，系统会自行解析所有子文件</div>
+        <div slot="tip" class="tooltip">已选择3dTiles, 注意:请选择需要上传的3dTiles的根目录，系统会自行解析所有子文件, 限制大小2G</div>
       </el-upload>
       <el-button id="upload" size="medium" type="success" plain @click="submitUpload">上传到服务器</el-button>
       <el-button id="pre" size="medium" type="primary" plain @click="pre">上一步</el-button>

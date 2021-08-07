@@ -28,7 +28,7 @@
         :on-success="fileSuccessUpLoad"
       >
         <el-button slot="trigger" size="medium" type="primary">选取文件</el-button>
-        <div slot="tip" class="tooltip">已选择{{ type }}, 注意:请至少上传shapefile文件中必须的.shp .shx .dbf三类数据，缺一不可</div>
+        <div slot="tip" class="tooltip">已选择{{ type }}, 注意:请至少上传shapefile文件中必须的.shp .shx .dbf三类数据，缺一不可, 限制大小2G</div>
       </el-upload>
       <el-button id="upload" size="medium" type="success" plain @click="submitUpload">上传到服务器</el-button>
       <el-button id="pre" size="medium" type="primary" plain @click="pre">上一步</el-button>

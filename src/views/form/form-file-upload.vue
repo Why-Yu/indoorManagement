@@ -28,7 +28,7 @@
 
           <div v-show="active === 1">
             <el-form-item>
-              <form-upload-excel v-if="uploadExcel.includes(type)" :type="type" :active.sync="active" />
+              <form-upload-noparam v-if="uploadNoParam.includes(type)" :type="type" :active.sync="active" />
               <form-upload-shape v-else-if="uploadShape.includes(type)" :type="type" :active.sync="active" />
               <form-upload-image v-else-if="uploadImage.includes(type)" :type="type" :active.sync="active" />
               <form-upload-tdtiles v-else-if="uploadDirectory.includes(type)" :type="type" :active.sync="active" />
@@ -46,14 +46,14 @@
 </template>
 
 <script>
-import FormUploadExcel from '@/views/form/components/form-upload-excel'
+import FormUploadNoparam from '@/views/form/components/form-upload-noparam'
 import FormUploadShape from '@/views/form/components/form-upload-shape'
 import FormUploadImage from '@/views/form/components/form-upload-image'
 import FormUploadTdtiles from '@/views/form/components/form-upload-tdtiles'
 import FormUploadPlan from '@/views/form/components/form-upload-plan'
 
 export default {
-  components: { FormUploadPlan, FormUploadTdtiles, FormUploadImage, FormUploadShape, FormUploadExcel },
+  components: { FormUploadPlan, FormUploadTdtiles, FormUploadImage, FormUploadShape, FormUploadNoparam },
   data() {
     return {
       type: 'Ap',
@@ -78,10 +78,13 @@ export default {
       }, {
         label: 'Plan',
         value: 'Plan'
+      }, {
+        label: 'RemoteImage',
+        value: 'RemoteImage'
       }
       ],
       active: 0,
-      uploadExcel: ['Ap', 'Bluetooth', 'Wifi'],
+      uploadNoParam: ['Ap', 'Bluetooth', 'Wifi', 'RemoteImage'],
       uploadShape: ['IndoorTopo'],
       uploadImage: ['Tiles'],
       uploadDirectory: ['TdTiles'],

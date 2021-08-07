@@ -10,7 +10,7 @@
       :on-success="fileSuccessUpLoad"
     >
       <el-button slot="trigger" size="medium" type="primary">选取文件</el-button>
-      <div slot="tip" class="tooltip">已选择{{ type }}, 注意:请上传excel格式的文件</div>
+      <div slot="tip" class="tooltip">已选择{{ type }}, 注意:请上传{{ extension }}格式的文件, 限制大小2G</div>
     </el-upload>
     <el-button id="upload" size="medium" type="success" plain @click="submitUpload">上传到服务器</el-button>
     <el-button id="pre" size="medium" type="primary" plain @click="pre">上一步</el-button>
@@ -37,8 +37,10 @@ export default {
       accept: {
         Ap: '.xls,.xlsx',
         Bluetooth: '.xls,.xlsx',
-        Wifi: '.xls,.xlsx'
-      }
+        Wifi: '.xls,.xlsx',
+        RemoteImage: '.tar.gz'
+      },
+      extension: ''
     }
   },
   methods: {
@@ -49,7 +51,8 @@ export default {
       this.$refs.upload.submit()
       this.$emit('update:active', this.active + 1)
     },
-    fileSuccessUpLoad() {
+    fileSuccessUpLoad(res) {
+      console.log(res)
       this.$refs.upload.clearFiles()
       this.$message({
         message: '上传成功',
@@ -57,6 +60,7 @@ export default {
       })
     },
     getExtension(type) {
+      this.extension = this.accept[type]
       return this.accept[type]
     },
     getUploadPath(type) {

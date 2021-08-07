@@ -17,7 +17,7 @@
           {{ scope.row.index }}
         </template>
       </el-table-column>
-      <el-table-column align="center" label="数据标识" min-width="210">
+      <el-table-column align="center" label="数据标识" min-width="200">
         <template slot-scope="scope">
           {{ scope.row.name }}
         </template>
@@ -37,25 +37,26 @@
           {{ scope.row.date }}
         </template>
       </el-table-column>
-      <el-table-column align="center" label="云量" min-width="70">
+      <el-table-column align="center" label="云量%" min-width="70">
         <template slot-scope="scope">
           {{ scope.row.cloud }}
         </template>
       </el-table-column>
-      <el-table-column align="center" label="经度" min-width="155">
+      <el-table-column align="center" label="经度(左上)" min-width="145">
         <template slot-scope="scope">
           {{ scope.row.longitude }}
         </template>
       </el-table-column>
-      <el-table-column align="center" label="纬度" min-width="155">
+      <el-table-column align="center" label="纬度(左上)" min-width="145">
         <template slot-scope="scope">
           {{ scope.row.latitude }}
         </template>
       </el-table-column>
-      <el-table-column align="center" label="缩略图" min-width="80">
+      <el-table-column align="center" label="缩略图" min-width="90">
         <template slot-scope="scope">
           <el-image
-            :src="scope.row.image"
+            style="width: 80px; height: 80px"
+            :src="getImageSrc(scope.row)"
             :fit="fit"
           />
         </template>
@@ -91,6 +92,7 @@
 <script>
 import { getRemoteImage, deleteRemoteImage } from '@/api/api-table-remoteImage'
 import FormRemoteImage from '@/views/form/components/form-remote-image'
+import GlobalUrl from '@/utils/GlobalUrl'
 
 export default {
   components: { FormRemoteImage },
@@ -124,10 +126,13 @@ export default {
     fetchData() {
       this.listLoading = true
       getRemoteImage({ page: this.currentPage - 1, size: this.size }).then(response => {
-        this.list = response.data.items
-        this.total = response.data.total
+        this.list = response.data.content
+        this.total = response.data.totalElements
         this.listLoading = false
       })
+    },
+    getImageSrc(row) {
+      return GlobalUrl.prefixUrl + '/indoor-management/RemoteImage/' + row.index
     },
     handleFind(row) {
       this.$store.commit('cesium/SET_COORDINATES', { latitude: row.latitude, longitude: row.longitude })
@@ -160,19 +165,19 @@ export default {
     },
     handleCurrentChange(page) {
       getRemoteImage({ page: page - 1, size: this.size }).then(response => {
-        this.list = response.data.items
+        this.list = response.data.content
       })
     },
     handleSizeChange(size) {
       if (this.currentPage === 1) {
         getRemoteImage({ page: 0, size: size }).then(response => {
-          this.list = response.data.items
+          this.list = response.data.content
         })
         return
       }
       if (this.currentPage * size <= this.total) {
         getRemoteImage({ page: this.currentPage - 1, size: size }).then(response => {
-          this.list = response.data.items
+          this.list = response.data.content
         })
       }
     }

@@ -30,7 +30,7 @@
       <el-table-column align="center" label="室内平面缩略图" min-width="180">
         <template slot-scope="scope">
           <el-image
-            style="width: 60px; height: 60px"
+            style="width: 70px; height: 70px"
             :src="getImageSrc(scope.row)"
             :fit="fit"
           />
