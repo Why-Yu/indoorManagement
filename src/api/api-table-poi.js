@@ -1,8 +1,9 @@
 import request from '@/utils/request'
+import GlobalUrl from '@/utils/GlobalUrl'
 
 export function getPoi(data) {
   return request({
-    url: '/indoor-management/table/Poi/data',
+    url: GlobalUrl.prefixUrl + '/indoor-management/Poi/table/data',
     method: 'post',
     data
   })
@@ -10,7 +11,7 @@ export function getPoi(data) {
 
 export function createPoi(data) {
   return request({
-    url: '/indoor-management/table/Poi/create',
+    url: GlobalUrl.prefixUrl + '/indoor-management/Poi/table/create',
     method: 'post',
     data
   })
@@ -18,7 +19,7 @@ export function createPoi(data) {
 
 export function deletePoi(data) {
   return request({
-    url: '/indoor-management/table/Poi/delete',
+    url: GlobalUrl.prefixUrl + '/indoor-management/Poi/table/delete',
     method: 'post',
     data
   })
@@ -26,7 +27,7 @@ export function deletePoi(data) {
 
 export function updatePoi(data) {
   return request({
-    url: '/indoor-management/table/Poi/update',
+    url: GlobalUrl.prefixUrl + '/indoor-management/Poi/table/update',
     method: 'post',
     data
   })

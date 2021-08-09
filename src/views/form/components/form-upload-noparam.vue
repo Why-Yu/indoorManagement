@@ -35,10 +35,11 @@ export default {
     return {
       fileList: [],
       accept: {
-        Ap: '.xls,.xlsx',
-        Bluetooth: '.xls,.xlsx',
-        Wifi: '.xls,.xlsx',
-        RemoteImage: '.tar.gz'
+        Ap: '.xlsx',
+        Bluetooth: '.xlsx',
+        Wifi: '.xlsx',
+        RemoteImage: '.tar.gz',
+        Poi: '.xlsx'
       },
       extension: ''
     }
@@ -60,7 +61,11 @@ export default {
       })
     },
     getExtension(type) {
-      this.extension = this.accept[type]
+      if (type === 'RemoteImage') {
+        this.extension = '(仅支持Landsat8影像)' + this.accept[type]
+      } else {
+        this.extension = this.accept[type]
+      }
       return this.accept[type]
     },
     getUploadPath(type) {

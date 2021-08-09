@@ -42,14 +42,6 @@
           {{ scope.row.latitude }}
         </template>
       </el-table-column>
-      <el-table-column align="center" label="缩略图" min-width="250">
-        <template slot-scope="scope">
-          <el-image
-            :src="scope.row.image"
-            :fit="fit"
-          />
-        </template>
-      </el-table-column>
       <el-table-column align="center" label="操作" width="280">
         <template slot-scope="scope">
           <el-button icon="el-icon-search" size="small" round @click="handleFind(scope.row)">
@@ -112,8 +104,8 @@ export default {
     fetchData() {
       this.listLoading = true
       getDem({ page: this.currentPage - 1, size: this.size }).then(response => {
-        this.list = response.data.items
-        this.total = response.data.total
+        this.list = response.data.content
+        this.total = response.data.totalElements
         this.listLoading = false
       })
     },
@@ -148,19 +140,19 @@ export default {
     },
     handleCurrentChange(page) {
       getDem({ page: page - 1, size: this.size }).then(response => {
-        this.list = response.data.items
+        this.list = response.data.content
       })
     },
     handleSizeChange(size) {
       if (this.currentPage === 1) {
         getDem({ page: 0, size: size }).then(response => {
-          this.list = response.data.items
+          this.list = response.data.content
         })
         return
       }
       if (this.currentPage * size <= this.total) {
         getDem({ page: this.currentPage - 1, size: size }).then(response => {
-          this.list = response.data.items
+          this.list = response.data.content
         })
       }
     }

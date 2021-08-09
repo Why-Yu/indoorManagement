@@ -11,9 +11,9 @@
       </el-steps>
 
       <div class="formWrapper">
-        <el-form label-width="150px">
+        <el-form label-width="100px">
           <div v-show="active === 0">
-            <el-form-item label="选择上传的数据库">
+            <el-form-item label="选择数据库">
               <el-select v-model="type" placeholder="请选择">
                 <el-option
                   v-for="item in options"
@@ -33,6 +33,7 @@
               <form-upload-image v-else-if="uploadImage.includes(type)" :type="type" :active.sync="active" />
               <form-upload-tdtiles v-else-if="uploadDirectory.includes(type)" :type="type" :active.sync="active" />
               <form-upload-plan v-else-if="uploadPlan.includes(type)" :type="type" :active.sync="active" />
+              <form-upload-dem v-else :type="type" :active.sync="active" />
             </el-form-item>
           </div>
 
@@ -51,9 +52,10 @@ import FormUploadShape from '@/views/form/components/form-upload-shape'
 import FormUploadImage from '@/views/form/components/form-upload-image'
 import FormUploadTdtiles from '@/views/form/components/form-upload-tdtiles'
 import FormUploadPlan from '@/views/form/components/form-upload-plan'
+import FormUploadDem from '@/views/form/components/form-upload-dem'
 
 export default {
-  components: { FormUploadPlan, FormUploadTdtiles, FormUploadImage, FormUploadShape, FormUploadNoparam },
+  components: { FormUploadDem, FormUploadPlan, FormUploadTdtiles, FormUploadImage, FormUploadShape, FormUploadNoparam },
   data() {
     return {
       type: 'Ap',
@@ -81,10 +83,16 @@ export default {
       }, {
         label: 'RemoteImage',
         value: 'RemoteImage'
+      }, {
+        label: 'Poi',
+        value: 'Poi'
+      }, {
+        label: 'Dem',
+        value: 'Dem'
       }
       ],
       active: 0,
-      uploadNoParam: ['Ap', 'Bluetooth', 'Wifi', 'RemoteImage'],
+      uploadNoParam: ['Ap', 'Bluetooth', 'Wifi', 'RemoteImage', 'Poi'],
       uploadShape: ['IndoorTopo'],
       uploadImage: ['Tiles'],
       uploadDirectory: ['TdTiles'],

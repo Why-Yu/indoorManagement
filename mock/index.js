@@ -2,28 +2,28 @@ const Mock = require('mockjs')
 const { param2Obj } = require('./utils')
 
 const user = require('./user')
-const tablePoi = require('./mock-table-poi')
+// const tablePoi = require('./mock-table-poi')
 // const table3dTiles = require('./mock-table-3dTiles')
 // const tableAp = require('./mock-table-ap')
 // const tableBluetooth = require('./mock-table-bluetooth')
 // const tableWifi = require('./mock-table-wifi')
 // const tableRemoteImage = require('./mock-table-remoteImage')
 // const tableTiles = require('./mock-table-tiles')
-const tableDem = require('./mock-table-dem')
+// const tableDem = require('./mock-table-dem')
 // const tableIndoorTopo = require('./mock-table-indoor-topo')
 // const tablePlan = require('./mock-table-plan')
 // const dashBoard = require('./mock-dashboard')
 
 const mocks = [
-  ...user,
-  ...tablePoi,
+  ...user
+  // ...tablePoi,
   // ...table3dTiles,
   // ...tableAp,
   // ...tableBluetooth,
   // ...tableWifi,
   // ...tableRemoteImage,
   // ...tableTiles,
-  ...tableDem
+  // ...tableDem,
   // ...tableIndoorTopo,
   // ...tablePlan
   // ...dashBoard

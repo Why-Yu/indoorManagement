@@ -17,37 +17,37 @@
           {{ scope.row.index }}
         </template>
       </el-table-column>
-      <el-table-column align="center" label="省份" min-width="140">
+      <el-table-column align="center" label="省份" min-width="105">
         <template slot-scope="scope">
           {{ scope.row.province }}
         </template>
       </el-table-column>
-      <el-table-column align="center" label="城市" min-width="115">
+      <el-table-column align="center" label="城市" min-width="105">
         <template slot-scope="scope">
           {{ scope.row.city }}
         </template>
       </el-table-column>
-      <el-table-column align="center" label="区域" min-width="115">
+      <el-table-column align="center" label="区域" min-width="105">
         <template slot-scope="scope">
           {{ scope.row.area }}
         </template>
       </el-table-column>
-      <el-table-column align="center" label="类别" min-width="100">
+      <el-table-column align="center" label="类别" min-width="90">
         <template slot-scope="scope">
           {{ scope.row.type }}
         </template>
       </el-table-column>
-      <el-table-column align="center" label="名称" min-width="150">
+      <el-table-column align="center" label="名称" min-width="140">
         <template slot-scope="scope">
           {{ scope.row.name }}
         </template>
       </el-table-column>
-      <el-table-column align="center" label="经度" min-width="160">
+      <el-table-column align="center" label="经度" min-width="130">
         <template slot-scope="scope">
           {{ scope.row.longitude }}
         </template>
       </el-table-column>
-      <el-table-column align="center" label="纬度" min-width="160">
+      <el-table-column align="center" label="纬度" min-width="130">
         <template slot-scope="scope">
           {{ scope.row.latitude }}
         </template>
@@ -114,8 +114,8 @@ export default {
     fetchData() {
       this.listLoading = true
       getPoi({ page: this.currentPage - 1, size: this.size }).then(response => {
-        this.list = response.data.items
-        this.total = response.data.total
+        this.list = response.data.content
+        this.total = response.data.totalElements
         this.listLoading = false
       })
     },
@@ -150,19 +150,19 @@ export default {
     },
     handleCurrentChange(page) {
       getPoi({ page: page - 1, size: this.size }).then(response => {
-        this.list = response.data.items
+        this.list = response.data.content
       })
     },
     handleSizeChange(size) {
       if (this.currentPage === 1) {
         getPoi({ page: 0, size: size }).then(response => {
-          this.list = response.data.items
+          this.list = response.data.content
         })
         return
       }
       if (this.currentPage * size <= this.total) {
         getPoi({ page: this.currentPage - 1, size: size }).then(response => {
-          this.list = response.data.items
+          this.list = response.data.content
         })
       }
     }
