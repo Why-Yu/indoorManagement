@@ -1,5 +1,5 @@
 <template>
-  <el-dialog title="编辑菜单" :visible="dialogFormVisible">
+  <el-dialog title="编辑菜单" :visible="dialogFormVisible" :before-close="handleClose">
     <el-form :model="localFormData">
       <el-form-item label="ID" :label-width="formLabelWidth">
         <el-input v-model="localFormData.index" :disabled="true" />
@@ -69,6 +69,9 @@ export default {
           type: 'success'
         })
       })
+    },
+    handleClose() {
+      this.$emit('update:dialogFormVisible', false)
     }
   }
 }

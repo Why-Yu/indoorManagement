@@ -4,10 +4,10 @@
       <el-form-item label="ID" :label-width="formLabelWidth">
         <el-input v-model="localFormData.index" :disabled="true" />
       </el-form-item>
-      <el-form-item label="名称" :label-width="formLabelWidth">
+      <el-form-item label="点云名称" :label-width="formLabelWidth">
         <el-input v-model="localFormData.name" />
       </el-form-item>
-      <el-form-item label="存储根路径" :label-width="formLabelWidth">
+      <el-form-item label="存储路径" :label-width="formLabelWidth">
         <el-input v-model="localFormData.path" />
       </el-form-item>
       <el-form-item label="经度" :label-width="formLabelWidth">
@@ -25,22 +25,20 @@
 </template>
 
 <script>
-import { update3dTiles } from '@/api/api-table-3dTiles'
+import { updatePointCloud } from '@/api/api-table-pointcloud'
 
 export default {
   props: {
     formData: {
       type: Object,
       default: function() {
-        return {
-        }
+        return {}
       }
     },
     localFormData: {
       type: Object,
       default: function() {
-        return {
-        }
+        return {}
       }
     },
     dialogFormVisible: {
@@ -60,7 +58,7 @@ export default {
     clickYes() {
       this.$emit('update:dialogFormVisible', false)
       Object.assign(this.formData, this.localFormData)
-      update3dTiles(this.formData).then(response => {
+      updatePointCloud(this.formData).then(response => {
         this.$message({
           message: '编辑成功',
           type: 'success'

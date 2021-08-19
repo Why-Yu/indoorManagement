@@ -115,6 +115,18 @@ export const constantRoutes = [
         name: 'tiles',
         component: () => import('@/views/table/tiles/index'),
         meta: { title: 'Tiles', icon: 'table' }
+      },
+      {
+        path: 'panorama',
+        name: 'panorama',
+        component: () => import('@/views/table/panorama/index'),
+        meta: { title: 'Panorama', icon: 'deploymentunit' }
+      },
+      {
+        path: 'pointcloud',
+        name: 'pointcloud',
+        component: () => import('@/views/table/pointcloud/index'),
+        meta: { title: 'PointCloud', icon: 'cloud' }
       }
     ]
   },

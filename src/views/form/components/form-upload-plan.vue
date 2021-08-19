@@ -2,7 +2,7 @@
   <div>
     <el-form ref="ruleForm" :model="localFormData" :rules="rules">
       <el-form-item
-        label="所属建筑物名称"
+        label="数据名称"
         :label-width="formLabelWidth"
         prop="name"
       >
@@ -35,7 +35,7 @@
         :on-success="fileSuccessUpLoad"
       >
         <el-button slot="trigger" size="medium" type="primary">选取文件</el-button>
-        <div slot="tip" class="tooltip">已选择{{ type }}, 注意:请上传.png格式的文件</div>
+        <div slot="tip" class="tooltip">已选择{{ type }}, 注意:请上传{{ extension }}格式的文件</div>
       </el-upload>
       <el-button id="upload" size="medium" type="success" plain @click="submitUpload">上传到服务器</el-button>
       <el-button id="pre" size="medium" type="primary" plain @click="pre">上一步</el-button>
@@ -62,7 +62,7 @@ export default {
       formLabelWidth: '140px',
       rules: {
         name: [
-          { required: true, message: '请输入室内平面图名称', trigger: 'blur' }
+          { required: true, message: '请输入数据集名称', trigger: 'blur' }
         ],
         longitude: [
           { required: true, message: '请输入经度', trigger: 'blur' }
@@ -73,8 +73,11 @@ export default {
       },
       fileList: [],
       accept: {
-        Plan: '.png'
+        Plan: '.png',
+        Panorama: '.jfif',
+        PointCloud: '*'
       },
+      extension: '',
       localFormData: {
         name: '',
         longitude: null,
@@ -104,6 +107,11 @@ export default {
       })
     },
     getExtension(type) {
+      if (type === 'PointCloud') {
+        this.extension = '点云数据对应'
+      } else {
+        this.extension = this.accept[type]
+      }
       return this.accept[type]
     },
     getUploadPath(type) {

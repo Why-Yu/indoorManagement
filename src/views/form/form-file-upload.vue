@@ -89,6 +89,12 @@ export default {
       }, {
         label: 'Dem',
         value: 'Dem'
+      }, {
+        label: 'Panorama',
+        value: 'Panorama'
+      }, {
+        label: 'PointCloud',
+        value: 'PointCloud'
       }
       ],
       active: 0,
@@ -96,7 +102,7 @@ export default {
       uploadShape: ['IndoorTopo'],
       uploadImage: ['Tiles'],
       uploadDirectory: ['TdTiles'],
-      uploadPlan: ['Plan']
+      uploadPlan: ['Plan', 'Panorama', 'PointCloud']
     }
   },
   methods: {
